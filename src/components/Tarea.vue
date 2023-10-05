@@ -15,6 +15,18 @@
                                 </button>
                             </div>
                         </div>
+                        <br>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="cursor">
+                                    <i class="fa-regular fa-circle"></i>
+                                </span>
+                                Hacer la tarea
+                                <span class="text-danger cursor">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -29,4 +41,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.cursor {
+    cursor: pointer;
+}
+</style>
