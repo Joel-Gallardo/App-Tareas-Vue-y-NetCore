@@ -10,19 +10,27 @@
                             <input type="text" v-model="tarea" class="form-control form-control-lg"
                                 placeholder="Agregar Tarea " />
                             <div class="input-group-append">
-                                <button class="btn btn-success btn-lg">
+                                <button v-on:click="agregarTarea()" class="btn btn-success btn-lg">
                                     Agregar
                                 </button>
                             </div>
                         </div>
                         <br>
+
+                        <h5 v-if="!listaTareas.length">No hay tareas, añade una nueva</h5>
+
                         <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="cursor">
-                                    <i class="fa-regular fa-circle"></i>
+                            <li v-for="(tarea, index) of listaTareas" :key="index"
+                                class="list-group-item d-flex justify-content-between">
+                                <span v-on:click="cambiarEstadoDeTarea(tarea, index)" class="cursor">
+                                    <!-- <i v-bind:style="[ tarea.estado ? 'color: #1cab40;' : '' ]"
+                                        v-bind:class="[ tarea.estado ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle' ]"></i> -->
+
+                                    <i v-if="!tarea.estado" class="fa-regular fa-circle"></i>
+                                    <i v-if="tarea.estado" class="fa-solid fa-circle-check" style="color: #1cab40;"></i>
                                 </span>
-                                Hacer la tarea
-                                <span class="text-danger cursor">
+                                {{ tarea.nombre }}
+                                <span v-on:click="eliminarTarea(index)" class="text-danger cursor">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </span>
                             </li>
@@ -37,7 +45,32 @@
 
 <script>
 export default {
-    name: 'TareaComponent'
+    name: 'TareaComponent',
+    data() {
+        return {
+            tarea: '',
+            listaTareas: []
+        }
+    },
+    methods: {
+        agregarTarea() {
+            const tarea = {
+                nombre: this.tarea,
+                estado: false
+            }
+            this.listaTareas.push(tarea);
+            this.tarea = '';
+        },
+        eliminarTarea(index) {
+            this.listaTareas.splice(index, 1);
+        },
+        cambiarEstadoDeTarea(tarea, index) {
+            this.listaTareas[ index ].estado = !tarea.estado
+            // const tarea = document.querySelector('.cursor')
+            // tarea.appendChild('I')
+            // tarea.
+        }
+    }
 }
 </script>
 
