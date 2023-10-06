@@ -6,7 +6,10 @@
             <div class="col-lg-8 offset-lg-2">
                 <div class="card mt-4">
                     <div class="card-body">
-                        <div class="input-group">
+
+                        <span v-if="errorMensaje" class="text-danger">{{ errorMensaje }}</span>
+
+                        <div class="input-group mt-2">
                             <input type="text" v-model="tarea" class="form-control form-control-lg"
                                 placeholder="Agregar Tarea " />
                             <div class="input-group-append">
@@ -49,17 +52,29 @@ export default {
     data() {
         return {
             tarea: '',
-            listaTareas: []
+            listaTareas: [],
+            errorMensaje: ''
         }
     },
     methods: {
         agregarTarea() {
+
+            if (!this.tarea.trim()) { // Verifica si el campo está vacío o solo contiene espacios en blanco
+                this.errorMensaje = 'Por favor, ingresa una tarea antes de agregarla.';
+                setTimeout(() => {
+                    this.errorMensaje = ''; // Limpia el mensaje de error después de 2 segundos
+                }, 6000);
+                return;
+            }
+
             const tarea = {
                 nombre: this.tarea,
                 estado: false
             }
+
             this.listaTareas.push(tarea);
             this.tarea = '';
+            this.errorMensaje = '';
         },
         eliminarTarea(index) {
             this.listaTareas.splice(index, 1);
